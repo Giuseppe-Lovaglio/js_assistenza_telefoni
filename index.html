@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<style>
+    form {
+        max-width: 500px;
+        margin-left: auto;
+        margin-right: auto;
+        font-family: Times, 'Times New Roman', serif;
+    }
+
+    fieldset {
+        background-color: rgb(245, 230, 117);
+    }
+
+    #div_ricevuta {
+        display: none;
+        text-align: center;
+        width: 300px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    #contenitore_ricevuta {
+        border-top: 1px solid black;
+        border-left: 1px solid black;
+        border-spacing: 0;
+    }
+
+    #contenitore_ricevuta td {
+        border-bottom: 1px solid black;
+        border-right: 1px solid black;
+    }
+</style>
+
+<body>
+    <form id="form" name="modulo" method="post" action="#">
+        <fieldset>
+            <legend>Dati utente</legend>
+                <table>
+                    <tr>
+                        <td id="uno">Nome</td>
+                        <td><input type="text" name="nome" id="nome" class="casella" maxlength="20" required></td>
+                    </tr>
+                    <tr>
+                        <td id="due">Cognome</td>
+                        <td><input type="text" name="cognome" id="cognome" class="casella" maxlength="20" required></td>
+                    </tr>
+                    <tr>
+                        <td id="tre">Codice Fiscale</td>
+                        <td><input type="text" maxlength="16" name="codice_fiscale" id="codice_fiscale" class="casella" required></td>
+                    </tr>
+                    <tr>
+                        <td id="quattro">Città</td>
+                        <td><input type="text" name="città" id="città" class="casella" required></td>
+                    </tr>
+                    <tr>
+                        <td id="cinque">Gestore telefonico</td>
+                        <td>
+                            <select name="gestore_telefonico" id="gestore_telefonico"> Gestore telefonico
+                                <option>Vodafone</option>
+                                <option>Tim</option>
+                                <option>Wind-Tre</option>
+                                <option>Iliad</option>
+                                <option>Poste Mobile</option>
+                                <option>Kena</option>
+                                <option>Ho.</option>
+                                <option>Fastweb</option>
+                                <option>Tiscali</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td id="sei">Numero di telefono del dispositivo</td>
+                        <td><input type="tel" name="n_telefono_dispositivo" id="n_telefono_dispositivo" class="casella" maxlength="15" required></td>
+                    </tr>
+                    <tr>
+                        <td id="sette">Modello dispositivo</td>
+                        <td>
+                            <select name="modello_dispositivo" id="modello_dispositivo" class="casella">
+                                <option>Iphone 14 Pro Max</option>
+                                <option>Iphone 14 Pro</option>
+                                <option>Iphone 14</option>
+                                <option>Iphone 13 Pro Max</option>
+                                <option>Iphone 13 Pro</option>
+                                <option>Iphone 13</option>
+                                <option>Iphone 12 Pro Max</option>
+                                <option>Iphone 12 Pro</option>
+                                <option>Iphone 12</option>
+                                <option>Iphone 11 Pro Max</option>
+                                <option>Iphone 11 Pro</option>
+                                <option>Iphone 11</option>
+                                <option>Iphone X</option>
+                                <option>Iphone XR</option>
+                                <option>Iphone 8</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td id="otto">Breve descrizione del problema</td>
+                        <td><textarea name="descrizione_problema" id="descrizione_problema" rows="4" required></textarea></td>
+                    </tr>
+                    <tr>
+                        <td id="nove">Recapito di contatto (se diverso dal numero del dispositivo in riparazione)</td>
+                        <td><input type="tel" name="n_telefono" id="n_telefono" class="casella" maxlength="15" required></td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <input type="reset" value="Ripristina" >
+                            <input type="button" value="Invia" id="invia">
+                        </td>
+                    </tr>
+                </table>
+        </fieldset>
+    </form>
+    <div id="div_ricevuta">
+        <h2>Ricevuta di consegna</h2>
+        <p>
+            Centro riparazione iPhone in Via dei Mille, Bari
+        </p>
+        <table id="contenitore_ricevuta"></table>
+    </div>
+    <script>
+
+        let ids = ["nome", "cognome", "codice_fiscale", "città", "gestore_telefonico", "n_telefono_dispositivo", "modello_dispositivo", "descrizione_problema", "n_telefono"];
+        let pri_col = ["uno", "due", "tre", "quattro", "cinque", "sei", "sette", "otto", "nove"];
+
+        document.getElementById("invia").addEventListener("click", compila);
+
+        function compila() {
+
+            document.getElementById("contenitore_ricevuta").innerHTML = "";
+
+            for (let i = 0; i < ids.length; i++) {
+
+                let prima_colonna = document.getElementById(pri_col[i]).innerText;
+                let seconda_colonna = document.getElementById(ids[i]).value;
+
+                if (prima_colonna == "Recapito di contatto (se diverso dal numero del dispositivo in riparazione)") {
+                    if (document.getElementById(ids[i]).value == "") {
+                        seconda_colonna = document.modulo.n_telefono_dispositivo.value;
+                    }
+                }
+
+                document.getElementById("contenitore_ricevuta").innerHTML = document.getElementById("contenitore_ricevuta").innerHTML + "<tr><td align='left'>" + prima_colonna + "</td><td bgcolor='yellow'>" + seconda_colonna + "</td></tr>";
+            }
+
+            document.getElementById("div_ricevuta").style.display = "block";
+            }
+        
+    </script>
+</body>
+
+</html>
